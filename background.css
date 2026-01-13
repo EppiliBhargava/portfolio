@@ -1,0 +1,46 @@
+/* ========================================
+   FIXED PARALLAX + CINEMATIC BACKGROUND
+   ======================================== */
+
+body {
+  background: transparent;
+}
+
+/* Base background layers */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform, opacity;
+}
+
+/* Current image */
+body::before {
+  z-index: -2;
+  background-image: var(--bg-image-a);
+  opacity: var(--bg-a-opacity, 1);
+  transform: translateY(var(--bg-offset, 0px)) scale(1.08);
+  transition: opacity 0.7s ease-in-out;
+}
+
+/* Next image + dark veil combined */
+body::after {
+  z-index: -1;
+  background-image:
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, var(--bg-darkness, 0.45)) 0%,
+      rgba(0, 0, 0, calc(var(--bg-darkness, 0.45) + 0.35)) 70%
+    ),
+    var(--bg-image-b);
+  opacity: var(--bg-b-opacity, 0);
+  transform: translateY(var(--bg-offset, 0px)) scale(1.08);
+  /*transition: opacity 0.7s ease-in-out;*/
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+}
